@@ -1,2 +1,1 @@
-hello fellows
-this is luci at work
+hello guys, this is luci at work
