@@ -12,7 +12,7 @@ function fetchData(file) {
   });
 }
 
-const p = fetchData("smp.txt"); // request: promise object
+const p = fetchData("files/smp.txt"); // request: promise object
 p.then((data) => {
   const updatedCont = data.trim();
   fs.writeFile("files/a.txt", updatedCont, "utf-8", (err) => {
