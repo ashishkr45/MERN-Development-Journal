@@ -9,9 +9,14 @@ function setTimeoutPromisified(time) {
 }
 
 async function solve() {
-	await setTimeoutPromisified(1000);
+	await setTimeoutPromisified(5000);
 		console.log("Hello");
-	await setTimeoutPromisified(2000);
+	await setTimeoutPromisified(1000);
 		console.log("How's everything ?");
-	await setTimeoutPromisified(3000);
+	await setTimeoutPromisified(2000);
 		console.log("Silver Elo rivels Player");
+}
+
+solve();
+
+console.log("After the fn call")
