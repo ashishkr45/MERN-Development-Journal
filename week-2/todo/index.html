@@ -4,19 +4,23 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Todo Testing</title>
+	<link rel="stylesheet" href="style.css">
 </head>
-<body>
-	<h1>Todo</h1>
-  	<input type="text" placeholder="Enter your Tasks" id="taskInput" on>
-  	<button class="adder" onclick="addFn()">Add Task!</button>
-  	<ol id="taskList">
-		<li>
-		<input type="checkbox">
-		<span>Task 1</span>
-		<button class="delete" onclick="delFn(this)">Delete</button>
-		</li>
-  	</ol>
+<body style="background-color: #1f1f1f;">
 
-	<script src="app.js"></script>
+	<div class="main-cont">
+		<h1 style="color: #b4afaf;">Todo</h1>
+
+		<div class="input">
+			<input type="text" placeholder="Enter your Tasks" id="taskInput">
+  			<button class="adder" onclick="state()">Add Task!</button>
+		</div>
+
+		<div class="display-area">
+			<ol id="taskList"></ol>
+		</div>
+	</div>
+
+<script src="state-derived-todo.js"></script>
 </body>
 </html>

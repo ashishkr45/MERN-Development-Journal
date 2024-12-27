@@ -1,0 +1,113 @@
+/* Style for the main container */
+.main-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 91vh;
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #292929;
+    border: 2px solid #464646;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Style for the heading */
+.main-cont h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #b4afaf;
+}
+
+/* Style for the input area */
+.input {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 1px solid #555;
+    border-radius: 15px 0 0 15px;
+    background-color: #1f1f1f;
+    color: #b4afaf;
+    outline: none;
+}
+
+.input button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #223f69;
+    color: #e9dddd;
+    border: none;
+    border-radius: 0 15px 15px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+	transition: .5s;
+}
+
+.input button:hover {
+    background-color: #173253;
+}
+
+.display-area {
+    width: 100%;
+}
+
+.display-area ol {
+    list-style-type: decimal;
+    margin: 0;
+    padding: 0;
+}
+
+.display-area li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    font-size: 1.3rem; 
+    color: #ddd;
+    word-wrap: break-word;
+}
+
+.display-area li input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.display-area li span {
+    flex: 1;
+    font-size: 1.3rem; /* Increased font size */
+    color: #fff;
+    transition: text-decoration 1s ease, color 3s ease;
+}
+
+/* Add strikethrough when the checkbox is checked */
+.display-area li input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    color: #888; /* Dimmed color for completed tasks */
+}
+
+.display-area li button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background-color: #8B0000;
+    color: #e7e3e3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.display-area li button:hover {
+    background-color: #B22222;
+}
