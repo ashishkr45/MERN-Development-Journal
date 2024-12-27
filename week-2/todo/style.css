@@ -15,15 +15,28 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Style for the heading */
-.main-cont h1 {
-    text-align: center;
+.imgu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
-    font-size: 2rem;
-    color: #b4afaf;
+    gap: 10px; 
 }
 
-/* Style for the input area */
+.imgu img {
+    width: 3rem;
+    height: 3rem;
+    margin: 0; 
+}
+
+.imgu h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #b4afaf;
+    margin: 0; 
+}
+
+
 .input {
     display: flex;
     width: 100%;
