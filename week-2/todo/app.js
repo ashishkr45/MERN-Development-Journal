@@ -1,22 +1,44 @@
-function addTodo() {
-	const inputEl = document.querySelector("input");
-	const val = inputEl.value;
-	const loca = document.createElement("li");
-	loca.textContent = val;
+function addFn() {
+  const newTaskInput = document.getElementById("taskInput");
+  const taskList = document.getElementById("taskList");
 
-	document.getElementById("list").append(loca);
-	inputEl.value = "";
+  if (newTaskInput.value.trim() === "") {
+    alert("Please enter a task!");
+    return;
+  }
+
+  // Create a new list item
+  const task = document.createElement("li");
+
+  // Create a checkbox
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+
+  // Create the task display
+  const display = document.createElement("span");
+  display.textContent = newTaskInput.value;
+
+  // Create a delete button
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete");
+  deleteBtn.onclick = function () {
+    delFn(this);
+  };
+
+  // Append all elements to the task item
+  task.appendChild(checkbox);
+  task.appendChild(display);
+  task.appendChild(deleteBtn);
+
+  // Append the task item to the list
+  taskList.appendChild(task);
+
+  // Clear the input field
+  newTaskInput.value = "";
 }
-		
-function startTime() {
-	const change = document.getElementById("stime");
-			
-	let s = 0;
-	function callBack() {
-		change.innerHTML = s;
-			s++;
-		}
 
-	setInterval(callBack, 1000);
- 	time.value = "";
+function delFn(button) {
+  const task = button.parentElement;
+  task.remove();
 }

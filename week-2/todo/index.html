@@ -6,19 +6,16 @@
 	<title>Todo Testing</title>
 </head>
 <body>
-	<h1>Dynamic Todo list</h1>
-	<ol id="list">
-		<h6>Following are the Task for Today</h6>
-		<li>Wake Up</li>
-	</ol>
-
-	<input type="text" placeholder="Enter Tasks."></input>
-	<button onclick="addTodo()">Add Task</button>
-
-	<h3>A Fcking Stopwatch</h3>
-	<h3 id="stime">Timer</h3>
-	<input type="text" placeholder="Enter Time" id="time"></input>
-	<button onclick="startTime()" onenter>Stopwatch</button>
+	<h1>Todo</h1>
+  	<input type="text" placeholder="Enter your Tasks" id="taskInput" on>
+  	<button class="adder" onclick="addFn()">Add Task!</button>
+  	<ol id="taskList">
+		<li>
+		<input type="checkbox">
+		<span>Task 1</span>
+		<button class="delete" onclick="delFn(this)">Delete</button>
+		</li>
+  	</ol>
 
 	<script src="app.js"></script>
 </body>
