@@ -48,11 +48,19 @@ app.put("/", function(req, res) {
 });
 
 app.delete("/", function(req, res) {
+	
+
+	const newKidneys = [];
 	for(let i = 0; i < user[0].Kidneys.length; i++) {
-		if(!user[0].Kidneys[i].healthy) {
-			user[0].Kidneys.splice(i, 1);
+		if(user[0].Kidneys[i].healthy) {
+			newKidneys.push({
+				healthy: true
+			});
 		}
 	}
+
+	user[0].Kidneys = newKidneys;
+
 	res.json ({
 		msg: "Unhealthy Kidneys Removed!"
 	})
