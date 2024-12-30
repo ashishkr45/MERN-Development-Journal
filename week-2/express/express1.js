@@ -8,6 +8,8 @@ const user = [{
 	}]
 }];
 
+app.use(express.json());
+
 app.get("/", function(req, res) {
 	const userKidneys = user[0].Kidneys;
 	const noOfKidneys = user[0].Kidneys.length;
@@ -17,7 +19,7 @@ app.get("/", function(req, res) {
 			noHealthyKidneys++;
 		}
 	}
-	const noUnhealthyKidneys = userKidneys - noHealthyKidneys;
+	const noUnhealthyKidneys = noOfKidneys - noHealthyKidneys;
 	res.json({
 		noOfKidneys,
 		noHealthyKidneys,
@@ -36,5 +38,24 @@ app.post("/", function(req, res) {
 	})
 });
 
+app.put("/", function(req, res) {
+	for(let i = 0; i < user[0].Kidneys.length; i++) {
+		user[0].Kidneys[i].healthy = true;
+	}
+	res.json ({
+		msg: "kidneys Helthified!"
+	})
+});
+
+app.delete("/", function(req, res) {
+	for(let i = 0; i < user[0].Kidneys.length; i++) {
+		if(!user[0].Kidneys[i].healthy) {
+			user[0].Kidneys.splice(i, 1);
+		}
+	}
+	res.json ({
+		msg: "Unhealthy Kidneys Removed!"
+	})
+});
 
 app.listen(3000);
