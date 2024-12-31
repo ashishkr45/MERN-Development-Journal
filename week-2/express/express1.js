@@ -39,31 +39,49 @@ app.post("/", function(req, res) {
 });
 
 app.put("/", function(req, res) {
-	for(let i = 0; i < user[0].Kidneys.length; i++) {
-		user[0].Kidneys[i].healthy = true;
+	if(dumbFuckCheck()) {
+		res.status(411).json({
+			msg: "You dumb Fuck, no Spoiled kidneys to fix"
+		})
+	} else {
+		for(let i = 0; i < user[0].Kidneys.length; i++) {
+			user[0].Kidneys[i].healthy = true;
+		}
+		res.json ({
+			msg: "kidneys Helthified!"
+		})
 	}
-	res.json ({
-		msg: "kidneys Helthified!"
-	})
 });
 
-app.delete("/", function(req, res) {
-	
-
-	const newKidneys = [];
-	for(let i = 0; i < user[0].Kidneys.length; i++) {
-		if(user[0].Kidneys[i].healthy) {
-			newKidneys.push({
-				healthy: true
-			});
+function dumbFuckCheck() {
+	for (let i = 0; i < user[0].Kidneys.length; i++) {
+		if (!user[0].Kidneys[i].healthy) {
+			return false;
 		}
 	}
+	return true;
+}
 
-	user[0].Kidneys = newKidneys;
 
-	res.json ({
-		msg: "Unhealthy Kidneys Removed!"
-	})
+app.delete("/", function(req, res) {
+	if(dumbFuckCheck()) {
+		res.status(411).json({
+			msg: "You dumb Fuck, no Spoiled kidneys to remove"
+		})
+	} else {
+		const newKidneys = [];
+		for(let i = 0; i < user[0].Kidneys.length; i++) {
+			if(user[0].Kidneys[i].healthy) {
+				newKidneys.push({
+					healthy: true
+				});
+			}
+		}
+		user[0].Kidneys = newKidneys;
+		res.json ({
+			msg: "Unhealthy Kidneys Removed!"
+		})
+	}
 });
 
 app.listen(3000);
