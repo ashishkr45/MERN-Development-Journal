@@ -113,8 +113,6 @@ const quizData = [
 	}
 ];
 
-]
-
 // accessing the html elem.
 const questionDiv = document.getElementById('question');
 const optionsDiv = document.getElementById('options');
