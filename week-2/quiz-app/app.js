@@ -55,6 +55,7 @@ function loadQns() {
         input.type = 'radio'; 
         input.name = 'answer'; 
         input.value = key;
+		input.className = 'option';
 
         const label = document.createElement('label');
         label.textContent = currQns[key];
