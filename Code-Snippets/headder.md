@@ -1,8 +1,8 @@
 ## What are Headders: 
-	basically headders are the extra meta data sent the server
+basically headders are the extra meta data sent the server
 ## Fetch ##
-	used for sending background request to the server. which is nativaly avilable in the js libraies
-	for moreinfo: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API".
+for sending background request to the server. which is nativaly avilable in the js libraies
+*moreinfo: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API".*
 **syntax**
 ```javascript
 	async function getData() {
@@ -17,8 +17,8 @@
 ```
 
 ## Axios ##
-	dose the same thing as fetch but the syntax is cleaner then Fetch.
-	http clinte
+1. dose the same thing as fetch but the syntax is cleaner then Fetch.
+2. http clinte
 **syntax**
 ```javascript
 	// we first need to bring the axios library to the code, that'll add extra bulk
