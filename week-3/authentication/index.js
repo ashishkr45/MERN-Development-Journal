@@ -55,8 +55,8 @@ app.post("/signin", (req, res) => {
 	console.log(users);
 });
 
-app.post("/me", (req, res) => {
-	const token = req.body.token;
+app.get("/me", (req, res) => {
+	const token = req.headers.token;
 
 	const user = users.find(user => user.token === token);
 
@@ -64,7 +64,11 @@ app.post("/me", (req, res) => {
 		res.send({
 			message: `Hello, ${user.username}` 
 		})
-	}
+	} else {
+        res.status(401).send({
+            message: `You are not authorized`
+        });
+    }
 });
 
 app.listen(3000);
