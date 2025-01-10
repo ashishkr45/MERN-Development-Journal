@@ -1,0 +1,12 @@
+[
+  {
+    "username": "john_doe",
+    "password": "securepassword123",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5fZG9lIiwiaWF0IjoxNzM2NDMzODIzfQ.7iJTP0QmzVdeRV559J2cwHRxFF1cFrqQfObohBh3pjs"
+  },
+  {
+    "username": "bob_builder",
+    "password": "buil!d987",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvYl9idWlsZGVyIiwiaWF0IjoxNzM2NDM0ODkwfQ.w-iD_s0eVfCWSZ0j5YzS_tfilReUWoDKRHK8ANl7Lwg"
+  }
+]
