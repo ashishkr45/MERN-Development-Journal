@@ -3,10 +3,12 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const JWT_SECRET = "AshLucifer";
 const app = express();
+
+// this middleware help's us extract the data in the body 
 app.use(express.json());
 
 app.post("/signup", (req, res) => {
-    const username = req.body.username;
+    const username = req.body.username; // since we're using req.body we need to use express.json() middleware
     const password = req.body.password;
 
     fs.readFile("data.json", "utf-8", (err, data) => {
@@ -95,54 +97,58 @@ app.post("/signin", (req, res) => {
     });
 });
 
-app.get("/me", (req, res) => {
-    const token = req.headers.authorization; // Use `authorization` or the correct header name
-
+function auth(req, res, next) {
+    const token = req.headers.authorization;
     if (!token) {
-        return res.status(401).send({
-            message: "Token not provided"
+        return res.status(411).send({
+            message: "Token not passed!"
         });
     }
 
     try {
-        // Verify the token
-        const decodedInfo = jwt.verify(token, JWT_SECRET); // Extracts the username from the token
-
-        fs.readFile("data.json", "utf-8", (err, data) => {
-            if (err) {
-                return res.status(500).send({
-                    message: "Unable to read the file"
-                });
-            }
-
-            let users = [];
-            try {
-                users = JSON.parse(data);
-            } catch (error) {
-                users = [];
-            }
-
-            const user = users.find((u) => u.username === decodedInfo.username);
-
-            if (user) {
-                return res.send({
-                    message: "User authorized",
-                    user: {
-                        username: user.username,
-                        password: user.password
-                    }
-                });
-            } else {
-                return res.status(403).send({
-                    message: "Invalid token"
-                });
-            }
-        });
+        const decodedInfo = jwt.verify(token, JWT_SECRET);
+        req.user = decodedInfo;
+        next();
     } catch (error) {
-        return res.status(401).send({
-            message: "Invalid token"
+        return res.status(400).send({
+            message: "You are not logged in"
         });
     }
+}
+
+
+app.get("/me", auth, (req, res) => {
+    const username = req.user.username;
+    fs.readFile("data.json", "utf-8", (err, data) => {
+        if (err) {
+            return res.status(500).send({
+                message: "Unable to read the file"
+            });
+        }
+
+        let users = [];
+        try {
+            users = JSON.parse(data);
+        } catch (error) {
+            users = [];
+        }
+
+        const user = users.find((u) => u.username === username);
+
+        if (user) {
+            return res.send({
+                message: "User authorized",
+                user: {
+                    username: user.username,
+                    password: user.password
+                }
+            });
+        } else {
+            return res.status(403).send({
+                message: "Invalid token"
+            });
+        }
+    });
 });
 
 app.listen(3000, () => {
