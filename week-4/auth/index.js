@@ -107,7 +107,8 @@ function auth(req, res, next) {
 
     try {
         const decodedInfo = jwt.verify(token, JWT_SECRET);
-        req.user = decodedInfo;
+        // req.user = decodedInfo;
+        req.user = decodedInfo.username;
         next();
     } catch (error) {
         return res.status(400).send({
@@ -118,7 +119,7 @@ function auth(req, res, next) {
 
 
 app.get("/me", auth, (req, res) => {
-    const username = req.user.username;
+    // const username = req.user.username;
     fs.readFile("data.json", "utf-8", (err, data) => {
         if (err) {
             return res.status(500).send({
@@ -133,7 +134,7 @@ app.get("/me", auth, (req, res) => {
             users = [];
         }
 
-        const user = users.find((u) => u.username === username);
+        const user = users.find((u) => u.username === req.user);
 
         if (user) {
             return res.send({
