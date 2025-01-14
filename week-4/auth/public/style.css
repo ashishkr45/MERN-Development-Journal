@@ -1,0 +1,79 @@
+/* General Styles */
+body {
+    background-color: #121212;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Styles */
+#SignUp, #SignIn, #UserInfo, #SignOut {
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    margin: 10px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Input and Button Styles */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #2C2C2C;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px #4CAF50;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45A049;
+}
+
+/* User Info Section */
+#UserInfo p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#dispInfo {
+    display: block;
+    padding: 10px;
+    background-color: #2C2C2C;
+    border-radius: 5px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Logout Button */
+#SignOut button {
+    background-color: #FF5733;
+}
+
+#SignOut button:hover {
+    background-color: #E74C3C;
+}

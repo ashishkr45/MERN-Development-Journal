@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>AuthFront</title>
+	<link rel="stylesheet" href="style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
 	<script>
 		async function signUp() {
@@ -20,7 +21,6 @@
 				alert(error.response?.data?.message || "Sign-up failed");
 			}
 		}
-		// signup is fucking done baabyy!!!!
 
 		async function signIn() {
 			const username = document.getElementById("signin-username").value;
@@ -31,9 +31,27 @@
 					username: username,
 					password: password,
 				});
+
+				localStorage.setItem("token", response.data.authorization);
 				alert(response.data.message || "Sign-in successful!");
 			} catch (error) {
 				alert(error.response?.data?.message || "Sign-in failed");
+			}
+			getUserInfo();
+		}
+
+		async function getUserInfo() {
+			try {
+				const response = await axios.get("http://localhost:3000/me", {
+					headers: {
+						authorization: `${localStorage.getItem("token")}`
+					}
+				});
+
+				console.log(response.data); // Display the response in the console for debugging
+				document.getElementById("dispInfo").innerHTML = "Username: " + response.data.user.username +"\n"+ "Password: " + response.data.user.password;
+			} catch (error) {
+				// alert(error.response?.data?.message || "Failed to fetch user info");
 			}
 		}
 	</script>
@@ -53,6 +71,7 @@
 
 	<div id="UserInfo">
 		<p>User Information:</p>
+		<span id="dispInfo"></span>
 		<div id="info"></div>
 	</div>
 

@@ -64,8 +64,6 @@ app.post("/signup", (req, res) => {
     });
 });
 
-// signup is fucking done baabyy!!!!
-
 app.post("/signin", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -90,9 +88,9 @@ app.post("/signin", (req, res) => {
 			const token = jwt.sign({ username }, JWT_SECRET);
 			return res.send({
 				message: "Login successful",
+                authorization: token,
 				user: {
-					username: user.username,
-					token: token
+					username: user.username
 				}
 			});
 		} else {
