@@ -7,6 +7,10 @@ const app = express();
 // this middleware help's us extract the data in the body 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/index.html")
+});
+
 app.post("/signup", (req, res) => {
     const username = req.body.username; // since we're using req.body we need to use express.json() middleware
     const password = req.body.password;
@@ -43,7 +47,7 @@ app.post("/signup", (req, res) => {
             token: token
         };
 
-		res.send(newUser);
+		// res.send(newUser);
         users.push(newUser);
 
         fs.writeFile("data.json", JSON.stringify(users, null, 2), "utf-8", (err) => {
@@ -59,6 +63,8 @@ app.post("/signup", (req, res) => {
         });
     });
 });
+
+// signup is fucking done baabyy!!!!
 
 app.post("/signin", (req, res) => {
     const username = req.body.username;

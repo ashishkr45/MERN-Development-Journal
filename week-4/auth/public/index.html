@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AuthFront</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+	<script>
+		async function signUp() {
+			const username = document.getElementById("signup-username").value;
+			const password = document.getElementById("signup-password").value;
+
+			try {
+				const response = await axios.post("http://localhost:3000/signup", {
+					username: username,
+					password: password,
+				});
+				alert(response.data.message || "You're signed up successfully!");
+			} catch (error) {
+				alert(error.response?.data?.message || "Sign-up failed");
+			}
+		}
+		// signup is fucking done baabyy!!!!
+
+		async function signIn() {
+			const username = document.getElementById("signin-username").value;
+			const password = document.getElementById("signin-password").value;
+
+			try {
+				const response = await axios.post("http://localhost:3000/signin", {
+					username: username,
+					password: password,
+				});
+				alert(response.data.message || "Sign-in successful!");
+			} catch (error) {
+				alert(error.response?.data?.message || "Sign-in failed");
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="SignUp">
+		<input type="text" id="signup-username" name="username" placeholder="Username">
+		<input type="password" id="signup-password" name="password" placeholder="Password">
+		<button onclick="signUp()">Sign Up</button>
+	</div>
+
+	<div id="SignIn">
+		<input type="text" id="signin-username" name="username" placeholder="Username">
+		<input type="password" id="signin-password" name="password" placeholder="Password">
+		<button onclick="signIn()">Sign In</button>
+	</div>
+
+	<div id="UserInfo">
+		<p>User Information:</p>
+		<div id="info"></div>
+	</div>
+
+	<div id="SignOut">
+		<button onclick="logOut()">Log Out</button>
+	</div>
+</body>
+</html>
