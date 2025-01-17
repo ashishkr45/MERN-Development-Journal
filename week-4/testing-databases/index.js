@@ -4,8 +4,8 @@ const { UserModel, TodoModel} = require("./database/db");
 const { auth, JWT_SECRET } = require("./authentication/auth") 
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
+const saltRounds = 10;
 mongoose.connect("mongodb+srv://ashishkr45943:tm57o9yh88B9PRW9@cluster0.6uyzs.mongodb.net/todo-db");
 const app = express();
 app.use(express.json());
