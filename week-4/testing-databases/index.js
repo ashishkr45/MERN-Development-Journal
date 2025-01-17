@@ -76,9 +76,10 @@ app.post("/todo", auth, async function(req, res) {
 
 app.get('/todos', auth, async function(req, res) {
 	const userId = req.userId;
+
 	const todos = await TodoModel.find({
-		userId: userId
-	});
+        userId
+    }).populate('userId').exec();
 
 	res.json({ todos });
 });
