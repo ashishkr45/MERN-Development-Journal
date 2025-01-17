@@ -41,7 +41,7 @@ app.post("/login", async function(req, res) {
 		email: email,
 	});
 
-	const passwordMatch = bcrypt.compare(password, user.password);
+	const passwordMatch = await bcrypt.compare(password, user.password);
 	
 	if(user && passwordMatch) {
 		const token = jwt.sign({

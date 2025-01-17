@@ -9,7 +9,7 @@ const User = new Schema({
 });
 
 const Todo = new Schema({
-	UserId: { type: Schema.Types.ObjectId, ref: 'users' },
+	userId: { type: Schema.Types.ObjectId, ref: 'users' },
 	title: String,
 	done: Boolean
 });
