@@ -2,8 +2,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { UserModel, TodoModel} = require("./database/db");
 const { auth, JWT_SECRET } = require("./authentication/auth") 
-const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose"); // used for connection to db
+const bcrypt = require('bcrypt'); // for hashing the pass
+const { z } = require("zod"); // for input validation
 
 const saltRounds = 10;
 mongoose.connect("mongodb+srv://ashishkr45943:tm57o9yh88B9PRW9@cluster0.6uyzs.mongodb.net/todo-db");
@@ -12,6 +13,22 @@ app.use(express.json());
 
 app.post("/signup", async function(req, res) {
 	try {
+		const reqBody = z.object({
+			email: z.string().min(10).max(100).email(),
+			name: z.string().min(3).max(50),
+			password: z.string().min(8).max(50)
+		});
+
+		const pasrsdData = reqBody.safeParse(req.body);
+
+		if(!pasrsdData.success) {
+			res.json({
+				message: "Incorrect formate",
+				error: pasrsdData.error
+			});
+			return;
+		}
+
 		const email = req.body.email;
 		const password = req.body.password;
 		const name = req.body.name;
