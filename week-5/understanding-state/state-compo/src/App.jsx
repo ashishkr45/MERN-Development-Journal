@@ -10,7 +10,11 @@ function App() {
 
   useEffect(function() {
     setInterval(increaseCount, 1000);
-  }, []);
+  }, []); // this effect will run on mount, because the array is empty
+
+  useEffect(() => { // this'll everytime the dependecy in the sq-bracket changes
+    console.log("change "+ count)
+  }, [count]);
 
   return (
     <div style={{display: "flex"}}>
