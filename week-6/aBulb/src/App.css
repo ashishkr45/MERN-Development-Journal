@@ -1,0 +1,79 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.bulb-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bulb-image {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.6s ease-in-out;
+}
+
+/* Glow effect when bulb is ON */
+.glow {
+  animation: flicker 1.5s infinite alternate;
+  filter: drop-shadow(0 0 15px rgba(255, 223, 0, 0.8));
+}
+
+/* Flickering effect */
+@keyframes flicker {
+  0% { filter: drop-shadow(0 0 10px rgba(255, 223, 0, 0.6)); }
+  100% { filter: drop-shadow(0 0 25px rgba(255, 223, 0, 1)); }
+}
+
+/* Smooth fade-in and fade-out */
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}
