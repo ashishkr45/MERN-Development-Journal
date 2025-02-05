@@ -5,22 +5,22 @@ import './App.css';
 
 const BulbContext = createContext(); // using context api for better passing of props without prop drilling
 
-function BublProvider({ children }) {
+function BulbProvider({ children }) {
   const [bulbOn, setBulbOn] = useState(true);
-  <BublProvider.Provider value={{
-    bulbOn: bulbOn,
-    setBulbOn: setBulbOn
-  }}>
-    {children}
-  </BublProvider.Provider>
+
+  return (
+    <BulbContext.Provider value={{bulbOn, setBulbOn}}>
+      {children}
+    </BulbContext.Provider>
+  );
 }
 
 function App() {
   return (
     <div>
-      <BublProvider> {/*wrapping the componets which'll further be needing the porps */}
+      <BulbProvider> {/*wrapping the componets which'll further be needing the porps */}
         <LightBulb />
-      </BublProvider>
+      </BulbProvider>
     </div>
   );
 }
@@ -34,8 +34,8 @@ function LightBulb() {
   );
 }
 
-function BulbState({ bulbOn }) {
-  const bulbOn = useContext(BulbContext);
+function BulbState() {
+  const { bulbOn } = useContext(BulbContext);
   return (
     <div className={`bulb-container ${bulbOn ? "glow" : ""}`}>
       <img 
@@ -47,8 +47,8 @@ function BulbState({ bulbOn }) {
   );
 }
 
-function ToggleBulbState({ setBulbOn }) {
-  const {bulbOn, setBulbOn} = useContext(BulbContext);
+function ToggleBulbState() {
+  const { setBulbOn } = useContext(BulbContext);
   function toggle() {
     setBulbOn(current => !current);
   }
