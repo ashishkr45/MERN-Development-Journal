@@ -1,27 +1,41 @@
-import { useState } from 'react';
+import { useState, createContext, useContext } from 'react';
 import litBulb from './assets/litBulb.png';
 import offBulb from './assets/offBulb.png';
 import './App.css';
 
+const BulbContext = createContext(); // using context api for better passing of props without prop drilling
+
+function BublProvider({ children }) {
+  const [bulbOn, setBulbOn] = useState(true);
+  <BublProvider.Provider value={{
+    bulbOn: bulbOn,
+    setBulbOn: setBulbOn
+  }}>
+    {children}
+  </BublProvider.Provider>
+}
+
 function App() {
   return (
     <div>
-      <LightBulb />
+      <BublProvider> {/*wrapping the componets which'll further be needing the porps */}
+        <LightBulb />
+      </BublProvider>
     </div>
   );
 }
 
 function LightBulb() {
-  const [bulbOn, setBulbOn] = useState(true);
   return (
     <div>
-      <BulbState bulbOn={bulbOn} /> {/*bulbOn is a prop to the Bulb State component*/}
-      <ToggleBulbState setBulbOn={setBulbOn} /> {/*setBulb0n are prop to the ToggleBulbState component */}
+      <BulbState/> {/*bulbOn is a prop to the Bulb State component*/} {/*no it'll be passed using context api */}
+      <ToggleBulbState/> {/*setBulb0n are prop to the ToggleBulbState component */}
     </div>
   );
 }
 
 function BulbState({ bulbOn }) {
+  const bulbOn = useContext(BulbContext);
   return (
     <div className={`bulb-container ${bulbOn ? "glow" : ""}`}>
       <img 
@@ -34,6 +48,7 @@ function BulbState({ bulbOn }) {
 }
 
 function ToggleBulbState({ setBulbOn }) {
+  const {bulbOn, setBulbOn} = useContext(BulbContext);
   function toggle() {
     setBulbOn(current => !current);
   }
