@@ -1,36 +1,18 @@
-import { useState } from 'react'
 import './App.css'
+import useFetch from './hooks/useFetch';
+import useCounter from './hooks/useCounter';
 
-// creation of custom hooks
-function useCounter() {
-  const [count, setCount] = useState(0);
-  function increment() {
-    setCount(current => current + 1);
-  }
-
-  return {
-    count,
-    increment
-  }
-}
 
 function App() {
+  const { posts, loading } = useFetch("https://jsonplaceholder.typicode.com/posts");
+  const {count, increment, decrement} = useCounter();
 
-  return ( // this all are having there independent hooks
-    <div>
-      <Counter />
-      <Counter />
-      <Counter />
-      <Counter />
-    </div>
-  )
-}
-
-function Counter() { // created a Counter component
-  const { count, increment } = useCounter();
   return (
-    <div>
-      <button onClick={increment}>increment {count}</button>
+    <div style={{border: "2px solid white", padding: "20px", borderRadius: "15px", textAlign: "center" }}>
+      {loading ? "Loading..." : posts[count].title } <br /><br />
+      <button style={{border: "2px solid white", borderRadius: "20px"}} onClick={decrement}>Prev</button>
+      <span> </span>
+      <button style={{border: "2px solid white", borderRadius: "20px"}} onClick={increment}>Next</button>
     </div>
   )
 }
