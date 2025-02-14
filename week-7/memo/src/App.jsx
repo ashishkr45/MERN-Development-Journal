@@ -35,10 +35,10 @@ const CurrentCount = memo(({count}) => {
 
 const ChangeCurrent = memo(({ useCount }) => {
   return (
-    <div>
+    <>
       <button onClick={() => useCount(current => current + 1)}>Increment</button>
       <button onClick={() => useCount(current => current - 1)}>Decrement</button>
-    </div>
+    </>
   );
 });
 
