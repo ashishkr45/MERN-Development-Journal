@@ -1,5 +1,4 @@
 import { RecoilRoot, useRecoilValue } from 'recoil';
-import './App.css';
 import { networkAtom, jobsAtom, messageAtom, notiCountAtom } from './atoms';
 
 function App() {
@@ -16,9 +15,7 @@ function NevBar() {
     const jobsCount = useRecoilValue(jobsAtom);
     const messageCount = useRecoilValue(messageAtom);
     const notiCount = useRecoilValue(notiCountAtom);
-  
     console.log({ networkCount, jobsCount, messageCount, notiCount });
-  
     return (
       <div>
         <IconCompo name="Home" />
@@ -33,6 +30,12 @@ function NevBar() {
     console.error("Error in NevBar:", error);
     return <div>Error in NevBar, loading data...</div>;
   }
+}
+
+function IconCompo({ name, count }) {
+  return (
+    <button>{count ? `${name}: ${count > 99 ? "99+" : count}` : name}</button>
+  );
 }
 
 export default App;
