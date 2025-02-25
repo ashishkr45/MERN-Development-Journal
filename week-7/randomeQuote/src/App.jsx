@@ -3,13 +3,6 @@ import quortGenerator from './quortGenerator';
 import './App.css';
 
 function App() {
-  const [quote, setQuote] = useState(null);
-
-  const handleNewQuote = async () => {
-    const newQuote = await quortGenerator(); // Wait for the quote to be fetched
-    setQuote(newQuote); // Update state with the new quote
-  };
-
   return (
     <>
       <div className='quoteBox'>
