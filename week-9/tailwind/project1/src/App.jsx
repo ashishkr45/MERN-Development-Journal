@@ -4,14 +4,14 @@ function App() {
   return (
     <div className="bg-[#00274e] h-screen flex flex-col justify-center items-center text-white ">
       <div className="text-2xl font-bold mb-4 mb-8">Verify Your Age</div>
-      <div className="mb-4 text-center text-base text-[#7b9abf]">
+      <div className="mb-4 text-center text-sm  text-base text-[#7b9abf]">
         Please confirm your birth year. This data will not be stored.
       </div>
       <input
         type="text" placeholder='Your Birth Year'
-        className="p-2 border border-gray-300 rounded mb-4 bg-[#18395f] text-black"
+        className="p-2 px-2 border border-[#38597c] text-blue-200 rounded mb-4 bg-[#18395f] rounded-lg w-48"
       />
-      <button className="bg-white text-sky-700 px-4 py-2 rounded hover:bg-gray-200">
+      <button className="bg-[#738aa0] text-red-50 w-48 px-4 py-2 rounded rounded-lg hover:bg-gray-200">
         Submit
       </button>
     </div>
