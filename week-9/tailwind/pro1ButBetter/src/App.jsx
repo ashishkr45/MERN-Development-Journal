@@ -10,16 +10,13 @@ function App() {
   const [otp, setOtp] = useState(""); // Store OTP
   const [inputValue, setInputValue] = useState(""); // Control the displayed input value
 
-  // Handle input change based on step
   const handleInputChange = (e) => {
-    setInputValue(e.target.value); // Update the displayed value
-
+    setInputValue(e.target.value);  
     if (step === 1) setBirthYear(e.target.value);
     else if (step === 2) setEmail(e.target.value);
     else setOtp(e.target.value);
   };
 
-  // Handle button click to progress to the next step
   const handleSubmit = () => {
     if (step === 1 && birthYear.trim()) {
       setStep(2);
