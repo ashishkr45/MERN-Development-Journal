@@ -24,3 +24,6 @@ class Employee extends User {
  what's the differenc btw interface and abs classes
 	* an abs class can have deafault implementations as we while interface can't
  */
+
+// dont till, 
+// 01:09:41/02:31:13
