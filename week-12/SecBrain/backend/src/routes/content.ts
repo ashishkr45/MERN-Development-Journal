@@ -6,13 +6,18 @@ import { auth } from "../middleware/middleware";
 const contentRouter: Router = Router();
 
 const contentSchema = z.object({
-  type: z.enum(["document", "tweet", "youtube", "link"]),
+  type: z.enum([
+    "image", "video", "article", "audio", "tweet", "link", "document",
+    "youtube", "code", "thread", "note", "quote", "presentation", "event",
+    "bookmark", "post", "reel", "story"
+  ]),
   link: z.string().url(),
   title: z.string().min(1, "Title is required"),
   tags: z.array(z.string()).nonempty("Tags cannot be empty"),
 });
 
-contentRouter.post("/content", auth, (req: Request, res: Response) => {
+
+contentRouter.post("/add", auth, (req: Request, res: Response) => {
   const handleContentPost = async () => {
     const parsedData = contentSchema.safeParse(req.body);
     if (!parsedData.success) {
@@ -72,20 +77,23 @@ contentRouter.post("/content", auth, (req: Request, res: Response) => {
     });
 });
 
-contentRouter.get("content", auth, (req: Request, res: Response) => {
+contentRouter.get("/getAll", auth, (req: Request, res: Response) => {
     const handleContentGet = async () => {
         const userId = req.userId;
-        const content = await Content.find({ userId: userId }).populate(
-            "userId",
-            "username"
-        );
-        res.status(200).json({
+        const content = await Content.find({ userId })
+          .populate("userId", "username")
+          .populate("tags", "title");
+
+        return res.status(200).json({
             content,
         });
-
-        
     }
-    
-})
+    handleContentGet().catch((error) => {
+      return res.status(500).json({
+        message: "Could not fetch content",
+        error,
+      });
+    });
+});
 
 export default contentRouter;

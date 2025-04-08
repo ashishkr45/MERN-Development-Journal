@@ -1,4 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 mongoose
 	.connect(process.env.MONGO_URL as string)
@@ -15,7 +17,10 @@ const userSchema = new Schema({
 const User = mongoose.model('User', userSchema);
 
 // Content Schema
-const contentType = ['image', 'video', 'article', 'audio'];
+const contentType = ["image", "video", "article", "audio", "tweet", 
+	"link", "document", "youtube", "code", "thread", "note", "quote", 
+	"presentation", "event", "bookmark", "post", "reel", "story"
+];
 
 const contentSchema = new Schema({
 	link: { type: String, required: true },
