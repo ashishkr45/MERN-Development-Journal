@@ -17,24 +17,30 @@ const contentSchema = z.object({
 });
 
 
-contentRouter.post("/add", auth, (req: Request, res: Response) => {
-  const handleContentPost = async () => {
+contentRouter.post("/board", auth, async (req: Request, res: Response) => {
+  try {
     const parsedData = contentSchema.safeParse(req.body);
     if (!parsedData.success) {
-      throw new Error(JSON.stringify({
-        message: "Error in input format",
-        errors: parsedData.error.format(),
-      }));
+      res.status(400).json({
+        status: "error",
+        message: "Invalid input format",
+        error: parsedData.error.format(),
+      });
+      return;
     }
 
     const { type, link, title, tags } = parsedData.data;
 
+    const exists = await Content.findOne({ link, userId: req.userId });
+    if (exists) {
+      res.status(409).json({ message: "Content already exists." });
+      return;
+    }
+
     const tagIds = await Promise.all(
       tags.map(async (tagTitle) => {
         let tag = await Tag.findOne({ title: tagTitle });
-        if (!tag) {
-          tag = await Tag.create({ title: tagTitle });
-        }
+        if (!tag) tag = await Tag.create({ title: tagTitle });
         return tag._id;
       })
     );
@@ -47,53 +53,65 @@ contentRouter.post("/add", auth, (req: Request, res: Response) => {
       userId: req.userId,
     });
 
-    return { message: "Content created successfully", content: newContent };
-  };
-
-  handleContentPost()
-    .then((result) => {
-      res.status(201).json({
-        status: "success",
-        message: result.message,
-        data: { content: result.content },
-      });
-    })
-    .catch((error) => {
-      console.error("Error creating content:", error);
-      if (error.message.startsWith("{")) {
-        const parsedError = JSON.parse(error.message);
-        res.status(400).json({
-          status: "error",
-          message: parsedError.message,
-          error: parsedError.errors,
-        });
-      } else {
-        res.status(500).json({
-          status: "error",
-          message: "Server error",
-          error: error instanceof Error ? error.message : "Unknown error",
-        });
-      }
+    res.status(201).json({
+      status: "success",
+      message: "Content created successfully",
+      data: { content: newContent },
     });
+
+  } catch (error) {
+    console.error("Error creating content:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
 });
 
-contentRouter.get("/getAll", auth, (req: Request, res: Response) => {
-    const handleContentGet = async () => {
-        const userId = req.userId;
-        const content = await Content.find({ userId })
-          .populate("userId", "username")
-          .populate("tags", "title");
 
-        return res.status(200).json({
-            content,
-        });
-    }
-    handleContentGet().catch((error) => {
-      return res.status(500).json({
-        message: "Could not fetch content",
-        error,
-      });
+contentRouter.get("/board", auth, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const content = await Content.find({ userId })
+      .populate("userId", "username")
+      .populate("tags", "title");
+
+    res.status(200).json({ content });
+  } catch (error) {
+    res.status(500).json({
+      message: "Could not fetch content",
+      error,
     });
+  }
 });
+
+contentRouter.delete("/delCont", auth, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId as string;
+    const contentId = req.body.contentId;
+
+    const deleted = await Content.deleteMany({
+      _id: contentId,
+      userId: userId
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Content deleted successfully",
+      deletedCount: deleted.deletedCount,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Failed to delete content",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+contentRouter
+
 
 export default contentRouter;
