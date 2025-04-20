@@ -1,11 +1,12 @@
 import { Button } from './components/ui/button'
+import { Card } from './components/ui/spaceCard'
 import { AddIcon, ShareIcon  } from './icons/Icons'
 import './App.css'
 
 function App() {
 
   return (
-    <div className=''>
+    <div>
      <div className='p-9'>
          <Button
           variant="secondary"
@@ -14,6 +15,7 @@ function App() {
           icon={<ShareIcon size='md'/>}
           onClick={() => alert("Primary Button Clicked")}
         />
+        
         <Button
           variant="primary"
           size="md"
@@ -21,6 +23,8 @@ function App() {
           icon= {<AddIcon size='md'/>}
           onClick={() => alert("Primary Button Clicked")}
         />
+
+        <Card />
      </div>
     </div>
   )

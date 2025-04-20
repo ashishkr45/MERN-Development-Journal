@@ -3,7 +3,7 @@ import { Request, Response, Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";  
 import { z } from "zod";
-import { User } from "../database/bd"; 
+import { User } from "../database/db"; 
 
 // Creating Express Instance
 const loginRouter: Router = Router();

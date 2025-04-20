@@ -1,7 +1,8 @@
 import { Request, Response, Router } from "express";
 import { z } from "zod";
-import { Content, Tag } from "../database/bd";
+import { Content, Tag } from "../database/db";
 import { auth } from "../middleware/middleware";
+import { nanoid } from "nanoid";
 
 const contentRouter: Router = Router();
 
@@ -69,7 +70,6 @@ contentRouter.post("/board", auth, async (req: Request, res: Response) => {
   }
 });
 
-
 contentRouter.get("/board", auth, async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
@@ -111,7 +111,112 @@ contentRouter.delete("/delCont", auth, async (req: Request, res: Response) => {
   }
 });
 
-contentRouter
+contentRouter.post("/share", auth, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const { contentId } = req.body;
 
+    if(!contentId) {
+      res.status(400).json({
+        message: "Content Id required!"
+      });
+      return;
+    }
+
+    const content = await Content.findOne({ _id: contentId, userId });
+    if(!content) {
+      res.status(404).json({
+        message: "No content found!"
+      });
+      return;
+    }
+
+    if(content.shareLink) {
+      res.status(200).json({
+        status: "success",
+        message: "Shareable link already exists",
+        shareLink: `/content/${content.shareLink}`,
+      });
+      return;
+    }
+
+    const shareLink = nanoid(10);
+    content.shareLink = shareLink;
+    await content.save();
+
+    res.status(200).json({
+      status: "success",
+      message: "Shareable link created",
+      shareLink: `/content/${shareLink}`,
+    });
+  } catch (error) {
+    console.error("Error creating shareable link:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+contentRouter.post("/unshare", auth, async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const { contentId } = req.body;
+
+    if (!contentId) {
+      res.status(400).json({ message: "Content Id is required!" });
+      return;
+    }
+
+    const content = await Content.findOne({ _id: contentId, userId });
+    if (!content) {
+      res.status(404).json({ message: "Content not found!" });
+      return;
+    }
+
+    if (!content.shareLink) {
+      res.status(400).json({ message: "Content is already private." });
+      return;
+    }
+
+    content.shareLink = undefined;
+    await content.save();
+
+    res.status(200).json({
+      status: "success",
+      message: "Content is now private.",
+    });
+
+  } catch (error) {
+    console.error("Error making content private:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+contentRouter.get(":shareLine", async (req: Request, res: Response) => {
+  try {
+    const { shareLine } = req.params;
+
+    if (!shareLine) {
+      res.status(400).json({ message: "Share link is required!" });
+      return;
+    }
+
+    const content = await Content.findOne({ shareLink: shareLine })
+      .populate("userId", "username")
+      .populate("tags", "title");
+
+    if (!content) {
+      res.status(404).json({ message: "Content not found!" });
+      return;
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Content fetched successfully",
+      content,
+    });
+  } catch (error) {
+    console.error("Error fetching shared content:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 export default contentRouter;
